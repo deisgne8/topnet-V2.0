@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="160" viewBox="0 0 1920 160" role="img" aria-labelledby="title desc">
+  <title id="title">TOPNET navigation with Rayadah Cloud separated</title>
+  <desc id="desc">A dark navy TOPNET navigation bar with Rayadah Cloud highlighted in a distinct light-blue pill.</desc>
+
+  <defs>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d1322"/>
+      <stop offset="0.55" stop-color="#151a2c"/>
+      <stop offset="1" stop-color="#10182b"/>
+    </linearGradient>
+    <radialGradient id="blueGlow" cx="50%" cy="50%" r="70%">
+      <stop offset="0" stop-color="#55d3ff" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#55d3ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-100%" width="200%" height="300%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="pillGlow" x="-30%" y="-80%" width="160%" height="260%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="160" fill="url(#bar)"/>
+  <path d="M0 159.5H1920" stroke="#55d3ff" stroke-opacity="0.20"/>
+  <path d="M0 24H1920M0 136H1920" stroke="#b8c9dc" stroke-opacity="0.045"/>
+  <path d="M260 0V160M1660 0V160" stroke="#b8c9dc" stroke-opacity="0.035"/>
+
+  <ellipse cx="1332" cy="80" rx="230" ry="72" fill="url(#blueGlow)" filter="url(#softGlow)"/>
+
+  <image x="64" y="59" width="149" height="35" preserveAspectRatio="xMidYMid meet" xlink:href="assets/topnet-logo.png"/>
+
+  <g fill="#bbbcc6" font-family="Manrope, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="0.45" text-anchor="middle">
+    <circle cx="493" cy="80" r="3" fill="#c9edae"/>
+    <text x="517" y="84" fill="#ededf1">HOME</text>
+    <text x="641" y="84">ABOUT US</text>
+    <text x="776" y="84">SERVICES</text>
+    <path d="M816 78l4 4 4-4" fill="none" stroke="#bbbcc6" stroke-width="1.2"/>
+    <text x="918" y="84">RESOURCES</text>
+    <text x="1069" y="84">CONTACT US</text>
+  </g>
+
+  <path d="M1184 47V113" stroke="#c8d4e2" stroke-opacity="0.28"/>
+
+  <rect x="1214" y="43" width="232" height="74" rx="37" fill="#55d3ff" fill-opacity="0.09" filter="url(#pillGlow)"/>
+  <rect x="1214.5" y="43.5" width="231" height="73" rx="36.5" fill="#151a2c" stroke="#55d3ff" stroke-opacity="0.86"/>
+  <circle cx="1243" cy="80" r="5" fill="#55d3ff"/>
+  <circle cx="1243" cy="80" r="11" fill="none" stroke="#55d3ff" stroke-opacity="0.32"/>
+  <text x="1270" y="85" fill="#55d3ff" font-family="Manrope, Arial, sans-serif" font-size="12" font-weight="800" letter-spacing="0.7">RAYADAH CLOUD</text>
+
+  <g stroke="#dbe2ec" stroke-opacity="0.8" fill="none" stroke-width="1.7">
+    <circle cx="1519" cy="77" r="8"/>
+    <path d="M1525 83l6 6"/>
+  </g>
+  <g fill="#c8cbd3" font-family="Manrope, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="0.5">
+    <text x="1556" y="84">EN</text>
+    <path d="M1580 78l4 4 4-4" fill="none" stroke="#bbbcc6" stroke-width="1.2"/>
+  </g>
+  <rect x="1620" y="47" width="236" height="66" rx="33" fill="#252c3e" stroke="#c9edae" stroke-opacity="0.30"/>
+  <text x="1650" y="85" fill="#ededf1" font-family="Manrope, Arial, sans-serif" font-size="12" font-weight="800" letter-spacing="0.45">REQUEST CONSULTATION</text>
+  <circle cx="1830" cy="80" r="15" fill="#c9edae"/>
+  <path d="M1824 80h11M1831 76l4 4-4 4" fill="none" stroke="#172033" stroke-width="1.5"/>
+</svg>

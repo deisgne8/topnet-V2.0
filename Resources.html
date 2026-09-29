@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="TOPNET resources for enterprise infrastructure decisions, company context, Saudi presence, and connected service delivery." />
+    <title>Resources | TOPNET</title>
+    <link rel="icon" type="image/png" href="assets/topnet-mark-cropped.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css?rev=resources-v1" />
+  </head>
+  <body class="resources-page-body">
+    <div class="site-cursor" aria-hidden="true"><span></span><i></i></div>
+
+    <main class="resources-page">
+      <section class="resources-hero" aria-labelledby="resources-page-title">
+        <header class="site-header">
+          <a class="brand" href="index.html" aria-label="TOPNET home">
+            <img class="brand-logo" src="assets/topnet-logo.png" alt="TOPNET" />
+          </a>
+
+          <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-navigation">
+            <span></span><span></span>
+          </button>
+
+          <nav class="nav" id="primary-navigation" aria-label="Primary navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About us</a>
+            <button class="services-link" type="button" aria-expanded="false" aria-controls="services-menu">Services <span aria-hidden="true">⌄</span></button>
+            <a class="active" href="Resources.html" aria-current="page">Resources</a>
+            <a href="Contact.html">Contact us</a>
+          </nav>
+
+          <div class="header-tools">
+            <button class="search-button" type="button" aria-label="Search"><span></span></button>
+            <div class="language-dropdown">
+              <button class="language-button" type="button" aria-expanded="false" aria-controls="language-menu">EN <span aria-hidden="true">⌄</span></button>
+              <div class="language-menu" id="language-menu" aria-hidden="true">
+                <button class="language-option active" type="button" data-lang="en">English</button>
+                <button class="language-option" type="button" data-lang="ar">Arabic</button>
+              </div>
+            </div>
+            <a class="rayadah-nav-link" href="Rayadah Cloud.html">Rayadah Cloud</a>
+            <a class="header-cta" href="Contact.html#enquiry">Request consultation <span aria-hidden="true"></span></a>
+          </div>
+
+          <div class="services-menu" id="services-menu" aria-hidden="true">
+            <div class="services-intro">
+              <span>Integrated ecosystem</span>
+              <h2>Find the right capability</h2>
+              <p>Browse TopNet’s connected service<br />categories and their specialist capabilities.</p>
+            </div>
+            <div class="service-categories" role="tablist" aria-label="Service categories">
+              <button class="service-category active" type="button" role="tab" aria-selected="true" data-service="connectivity">Connectivity Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="clouding">Clouding Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="hosting">Hosting Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="colocation">Co-Location Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="cybersecurity">Cybersecurity Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="security">Security Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="professional">Professional Services <span>→</span></button>
+              <button class="service-category" type="button" role="tab" aria-selected="false" data-service="managed">Managed Services <span>→</span></button>
+            </div>
+            <div class="service-detail" aria-live="polite">
+              <h2>Connectivity Services</h2>
+              <div class="service-capabilities">
+                <a href="Internet%20Connectivity.html">Internet Connectivity <span>→</span></a>
+                <a href="Data%20Connectivity.html">Data Connectivity <span>→</span></a>
+                <a href="services.html#connectivity-services">SD-WAN Connectivity <span>→</span></a>
+                <a href="services.html#connectivity-services">VPN Connectivity <span>→</span></a>
+              </div>
+              <a class="category-overview" href="services.html#service-catalog">Category overview <span>→</span></a>
+            </div>
+          </div>
+        </header>
+
+        <div class="resources-page-intro section-shell">
+          <div class="resources-page-copy">
+            <span class="pill">Media &amp; resources</span>
+            <h1 id="resources-page-title">Technical insight for infrastructure decisions</h1>
+            <p>Search, filter and browse practical content by topic, industry, service and resource type.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="resources-library section-shell" id="resources-library" aria-label="Resources">
+        <form class="resources-filters" role="search" aria-label="Search and filter resources">
+          <label class="resources-search-field">
+            <span>Search resources</span>
+            <input id="resource-search" type="search" placeholder="Search title, topic or service" autocomplete="off" />
+          </label>
+          <label>
+            <span>Resource type</span>
+            <select id="resource-type">
+              <option value="all">All</option>
+              <option value="Case Study">Case Study</option>
+              <option value="White Paper">White Paper</option>
+              <option value="Article">Article</option>
+              <option value="News">News</option>
+            </select>
+          </label>
+          <label>
+            <span>Sort</span>
+            <select id="resource-sort">
+              <option value="newest">Newest</option>
+              <option value="az">A–Z</option>
+            </select>
+          </label>
+        </form>
+
+        <div class="resources-browse-row">
+          <strong>Browse by:</strong>
+          <div class="resources-browse-controls">
+            <div class="resources-browse-group">
+              <button class="resources-browse-trigger" type="button" data-browse-trigger="topic" aria-expanded="false">Topic <span>+</span></button>
+              <div class="resources-browse-panel" data-browse-panel="topic" hidden>
+                <button type="button" data-filter-field="topic" data-filter-value="all">All topics</button>
+                <button type="button" data-filter-field="topic" data-filter-value="Reliability">Reliability</button>
+                <button type="button" data-filter-field="topic" data-filter-value="Business Continuity">Business Continuity</button>
+                <button type="button" data-filter-field="topic" data-filter-value="Operations">Operations</button>
+                <button type="button" data-filter-field="topic" data-filter-value="Company">Company</button>
+                <button type="button" data-filter-field="topic" data-filter-value="Security">Security</button>
+                <button type="button" data-filter-field="topic" data-filter-value="Infrastructure">Infrastructure</button>
+              </div>
+            </div>
+            <div class="resources-browse-group">
+              <button class="resources-browse-trigger" type="button" data-browse-trigger="industry" aria-expanded="false">Industry <span>+</span></button>
+              <div class="resources-browse-panel" data-browse-panel="industry" hidden>
+                <button type="button" data-filter-field="industry" data-filter-value="all">All industries</button>
+                <button type="button" data-filter-field="industry" data-filter-value="regulated enterprise">Regulated enterprise</button>
+                <button type="button" data-filter-field="industry" data-filter-value="Saudi Arabia">Saudi Arabia</button>
+                <button type="button" data-filter-field="industry" data-filter-value="enterprise teams">Enterprise teams</button>
+                <button type="button" data-filter-field="industry" data-filter-value="Company">Company</button>
+                <button type="button" data-filter-field="industry" data-filter-value="risk and governance">Risk and governance</button>
+              </div>
+            </div>
+            <div class="resources-browse-group">
+              <button class="resources-browse-trigger" type="button" data-browse-trigger="service" aria-expanded="false">Product / service <span>+</span></button>
+              <div class="resources-browse-panel" data-browse-panel="service" hidden>
+                <button type="button" data-filter-field="service" data-filter-value="all">All services</button>
+                <button type="button" data-filter-field="service" data-filter-value="Connectivity">Connectivity</button>
+                <button type="button" data-filter-field="service" data-filter-value="Rayadah Cloud">Rayadah Cloud</button>
+                <button type="button" data-filter-field="service" data-filter-value="Managed Services">Managed Services</button>
+                <button type="button" data-filter-field="service" data-filter-value="TopNet">TopNet</button>
+                <button type="button" data-filter-field="service" data-filter-value="Cybersecurity">Cybersecurity</button>
+                <button type="button" data-filter-field="service" data-filter-value="Co-location">Co-location</button>
+              </div>
+            </div>
+            <div class="resources-browse-group">
+              <button class="resources-browse-trigger" type="button" data-browse-trigger="type" aria-expanded="false">Resource type <span>+</span></button>
+              <div class="resources-browse-panel" data-browse-panel="type" hidden>
+                <button type="button" data-filter-field="type" data-filter-value="all">All types</button>
+                <button type="button" data-filter-field="type" data-filter-value="Case Study">Case Study</button>
+                <button type="button" data-filter-field="type" data-filter-value="White Paper">White Paper</button>
+                <button type="button" data-filter-field="type" data-filter-value="Article">Article</button>
+                <button type="button" data-filter-field="type" data-filter-value="News">News</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="resources-grid" id="resource-grid">
+          <article class="insight-card resource-card" data-type="Case Study" data-topic="Reliability" data-industry="regulated enterprise" data-service="Connectivity" data-order="1">
+            <img src="assets/insight-security.png" alt="Digital security shield" loading="lazy" />
+            <div>
+              <small>Case Study · Reliability</small>
+              <h3>Building a resilient connectivity foundation for a regulated enterprise</h3>
+              <footer class="resource-card-footer">
+                <p><span class="insight-type">Connectivity</span></p>
+                <span class="resource-card-action is-unavailable" title="Resource detail page not available in this project">Open resource <span aria-hidden="true">→</span></span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="insight-card resource-card" data-type="White Paper" data-topic="Business Continuity" data-industry="Saudi Arabia" data-service="Rayadah Cloud" data-order="2">
+            <img src="assets/insight-cloud.png" alt="Cloud infrastructure network" loading="lazy" />
+            <div>
+              <small>White Paper · Business Continuity</small>
+              <h3>A practical guide to cloud continuity in Saudi Arabia</h3>
+              <footer class="resource-card-footer">
+                <p><span class="insight-type">Rayadah Cloud</span></p>
+                <span class="resource-card-action is-unavailable" title="Resource detail page not available in this project">Open resource <span aria-hidden="true">→</span></span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="insight-card resource-card" data-type="Article" data-topic="Operations" data-industry="enterprise teams" data-service="Managed Services" data-order="3">
+            <img src="assets/insight-sla.png" alt="Service availability performance gauge" loading="lazy" />
+            <div>
+              <small>Article · Operations</small>
+              <h3>What enterprise teams should expect from a measurable SLA</h3>
+              <footer class="resource-card-footer">
+                <p><span class="insight-type">Managed Services</span></p>
+                <span class="resource-card-action is-unavailable" title="Resource detail page not available in this project">Open resource <span aria-hidden="true">→</span></span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="insight-card resource-card" data-type="News" data-topic="Company" data-industry="Company" data-service="TopNet" data-order="4">
+            <img src="assets/insight-security.png" alt="Connected enterprise security visual" loading="lazy" />
+            <div>
+              <small>News · Company</small>
+              <h3>TopNet expands its enterprise service experience</h3>
+              <footer class="resource-card-footer">
+                <p><span class="insight-type">TopNet</span></p>
+                <span class="resource-card-action is-unavailable" title="Resource detail page not available in this project">Open resource <span aria-hidden="true">→</span></span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="insight-card resource-card" data-type="Article" data-topic="Security" data-industry="risk and governance" data-service="Cybersecurity" data-order="5">
+            <img src="assets/resource-cybersecurity-globe.png" alt="Global network and cybersecurity infrastructure" loading="lazy" />
+            <div>
+              <small>Article · Security</small>
+              <h3>Structuring cybersecurity services around risk and governance</h3>
+              <footer class="resource-card-footer">
+                <p><span class="insight-type">Cybersecurity</span></p>
+                <span class="resource-card-action is-unavailable" title="Resource detail page not available in this project">Open resource <span aria-hidden="true">→</span></span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="insight-card resource-card" data-type="Case Study" data-topic="Infrastructure" data-industry="Infrastructure" data-service="Co-location" data-order="6">
+            <img src="assets/resource-colocation-security.png" alt="Secure cloud and data centre infrastructure" loading="lazy" />
+            <div>
+              <small>Case Study · Infrastructure</small>
+              <h3>Planning a low-risk co-location migration</h3>
+              <footer class="resource-card-footer">
+                <p><span class="insight-type">Co-location</span></p>
+                <span class="resource-card-action is-unavailable" title="Resource detail page not available in this project">Open resource <span aria-hidden="true">→</span></span>
+              </footer>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <a href="index.html" aria-label="TOPNET home"><img class="footer-logo" src="assets/topnet-logo.png" alt="TOPNET" /></a>
+        <p>One accountable digital infrastructure ecosystem<br />for Saudi enterprises and government<br />organizations. TopNet Digital Infrastructure<br />Services · Riyadh, Saudi Arabia</p>
+      </div>
+      <nav class="footer-column footer-services" aria-label="Footer services">
+        <h3>Services</h3>
+        <a href="services.html#connectivity-services">Connectivity Services</a>
+        <a href="services.html#clouding-services">Clouding Services</a>
+        <a href="services.html#hosting-services">Hosting Services</a>
+        <a href="services.html#colocation-services">Co-Location Services</a>
+      </nav>
+      <nav class="footer-column footer-explore" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <a href="Rayadah Cloud.html">Rayadah Cloud</a>
+        <a href="Resources.html" aria-current="page">Resources</a>
+        <a href="about.html">About TopNet</a>
+        <a href="Careers.html">Careers</a>
+        <a href="Contact.html">Contact Us</a>
+      </nav>
+      <div class="footer-connect">
+        <h3>Connect</h3>
+        <div class="social-links" aria-label="Social media">
+          <span aria-label="LinkedIn profile not provided" title="LinkedIn profile not provided">in</span>
+          <span aria-label="X profile not provided" title="X profile not provided">𝕏</span>
+          <span class="youtube-link" aria-label="YouTube channel not provided" title="YouTube channel not provided"><span></span></span>
+        </div>
+        <strong>Stay informed</strong>
+        <form class="newsletter-form">
+          <label class="sr-only" for="newsletter-email">Email address</label>
+          <input id="newsletter-email" type="email" placeholder="name@company.sa" />
+          <button class="footer-submit" type="submit" aria-label="Subscribe"><span class="footer-arrow" aria-hidden="true"></span></button>
+        </form>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© 2026 TopNet</p>
+        <nav class="footer-legal" aria-label="Legal">
+          <span title="Privacy policy page not provided">Privacy policy</span>
+          <span title="Terms page not provided">Terms</span>
+          <span title="Accessibility page not provided">Accessibility</span>
+          <span title="Sitemap page not provided">Sitemap</span>
+        </nav>
+      </div>
+    </footer>
+    <div class="footer-backdrop" aria-hidden="true"></div>
+
+    <script src="script.js?rev=resources-v1"></script>
+  </body>
+</html>
