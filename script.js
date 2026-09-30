@@ -481,12 +481,25 @@ if (!reducedMotion && performanceSection && 'IntersectionObserver' in window) {
 
 const aboutValuesSection = document.querySelector('.about-values-section');
 const aboutValueCards = Array.from(aboutValuesSection?.querySelectorAll('.about-value-card') || []);
+const aboutValuesRailMark = aboutValuesSection?.querySelector('.about-values-rail-mark');
+
+const syncAboutValuesRailIcon = (activeCard) => {
+  const sourceIcon = activeCard?.querySelector('.about-value-icon');
+  if (!aboutValuesRailMark || !sourceIcon) return;
+
+  const railIcon = sourceIcon.cloneNode(true);
+  railIcon.classList.add('about-values-active-icon');
+  aboutValuesRailMark.replaceChildren(railIcon);
+};
+
+syncAboutValuesRailIcon(aboutValueCards.find((card) => card.classList.contains('is-active')) || aboutValueCards[0]);
 
 if (aboutValuesSection && aboutValueCards.length && !reducedMotion) {
   aboutValuesSection.classList.add('has-scroll-values');
 
   const activateValue = (activeCard) => {
     aboutValueCards.forEach((card) => card.classList.toggle('is-active', card === activeCard));
+    syncAboutValuesRailIcon(activeCard);
   };
 
   let valuesFrame = null;
@@ -529,78 +542,114 @@ const aboutHistorySection = document.querySelector('.about-history-section');
 if (aboutHistoryItems.length && aboutHistorySection && !reducedMotion) {
   aboutHistorySection.classList.add('has-scroll-history');
   let historyIndex = 0;
-  let historyWheelDelta = 0;
-  let historyWheelLockUntil = 0;
-  let historySectionVisible = false;
+  let snapTarget = null;
+  let lastWheelTime = 0;
+  let gestureDirection = 0;
+  let gestureGap = 180;
+  let wheelHistoryActive = false;
 
   const activateHistoryItem = (index) => {
     historyIndex = index;
     aboutHistoryItems.forEach((item, itemIndex) => {
-      item.classList.toggle('is-active', itemIndex === historyIndex);
-      item.classList.toggle('is-before-active', itemIndex < historyIndex);
-      item.classList.toggle('is-after-active', itemIndex > historyIndex);
+      item.classList.toggle('is-active', itemIndex === index);
+      item.classList.toggle('is-before-active', itemIndex < index);
+      item.classList.toggle('is-after-active', itemIndex > index);
     });
   };
 
-  const handleHistoryWheel = (event) => {
+  const syncHistoryFromScroll = () => {
+    if (snapTarget !== null) {
+      if (Math.abs(window.scrollY - snapTarget) > 2) return;
+      snapTarget = null;
+    }
     const sectionBounds = aboutHistorySection.getBoundingClientRect();
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-    if (!historySectionVisible || sectionBounds.bottom <= 0 || sectionBounds.top >= viewportHeight || Math.abs(event.deltaY) < 2) return;
+    if (wheelHistoryActive && sectionBounds.bottom > 0 && sectionBounds.top < viewportHeight) return;
+    const pinnedDistance = Math.max(1, sectionBounds.height - viewportHeight);
+    const progress = Math.min(1, Math.max(0, -sectionBounds.top / pinnedDistance));
+    const nearestIndex = Math.round(progress * aboutHistoryItems.length - 0.5);
+    activateHistoryItem(Math.max(0, Math.min(aboutHistoryItems.length - 1, nearestIndex)));
+  };
+
+  const handleHistoryWheel = (event) => {
+    if (!event.cancelable || event.ctrlKey || event.metaKey || !event.deltaY ||
+        Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+    const sectionBounds = aboutHistorySection.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const direction = Math.sign(event.deltaY);
+    const inPin = sectionBounds.top <= 0 && sectionBounds.bottom > viewportHeight;
+    const enteringDown = direction > 0 && sectionBounds.top > 0 && sectionBounds.top <= viewportHeight;
+    const enteringUp = direction < 0 && sectionBounds.bottom <= viewportHeight && sectionBounds.bottom > 0;
+    if (!inPin && !enteringDown && !enteringUp) return;
+
+    for (let element = event.target; element instanceof Element; element = element.parentElement) {
+      if (element.scrollHeight <= element.clientHeight) continue;
+      if (!['auto', 'scroll', 'overlay'].includes(getComputedStyle(element).overflowY)) continue;
+      const remaining = direction > 0
+        ? element.scrollHeight - element.clientHeight - element.scrollTop
+        : element.scrollTop;
+      if (remaining > 0) return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.dispatchEvent(new Event('history-scroll-step'));
+    wheelHistoryActive = true;
 
     const now = performance.now();
-    if (now < historyWheelLockUntil) return;
-    historyWheelDelta += event.deltaY;
-    if (Math.abs(historyWheelDelta) < 36) return;
+    const newGesture = direction !== gestureDirection || now - lastWheelTime > gestureGap;
+    lastWheelTime = now;
+    if (!newGesture) return;
 
-    const direction = historyWheelDelta > 0 ? 1 : -1;
-    historyWheelDelta = 0;
-    historyWheelLockUntil = now + 850;
-    activateHistoryItem(Math.max(0, Math.min(aboutHistoryItems.length - 1, historyIndex + direction)));
+    gestureDirection = direction;
+    gestureGap = event.deltaMode === 0 && Math.abs(event.deltaY) < 60 ? 220 : 80;
+    const sectionStart = window.scrollY + sectionBounds.top;
+    const pinnedDistance = Math.max(1, sectionBounds.height - viewportHeight);
+    const lastIndex = aboutHistoryItems.length - 1;
+
+    if (enteringDown) {
+      activateHistoryItem(0);
+      snapTarget = sectionStart;
+    } else if (enteringUp) {
+      activateHistoryItem(lastIndex);
+      snapTarget = sectionStart + pinnedDistance * lastIndex / aboutHistoryItems.length;
+    } else {
+      const nextIndex = historyIndex + direction;
+      if (nextIndex < 0) {
+        snapTarget = sectionStart - Math.max(120, Math.abs(event.deltaY));
+      } else if (nextIndex > lastIndex) {
+        const pageMax = Math.max(0, document.scrollingElement.scrollHeight - viewportHeight);
+        snapTarget = Math.min(
+          pageMax,
+          sectionStart + sectionBounds.height + Math.max(120, Math.abs(event.deltaY))
+        );
+        const exitTarget = snapTarget;
+        snapTarget = null;
+        window.scrollTo({ top: exitTarget, behavior: 'instant' });
+        return;
+      } else {
+        activateHistoryItem(nextIndex);
+        snapTarget = sectionStart + pinnedDistance * nextIndex / aboutHistoryItems.length;
+      }
+    }
+
+    window.scrollTo({ top: snapTarget, behavior: 'smooth' });
   };
 
   activateHistoryItem(0);
-  window.addEventListener('wheel', handleHistoryWheel, { passive: true });
-
-  if ('IntersectionObserver' in window) {
-    const historyEntryObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !historySectionVisible) {
-        historySectionVisible = true;
-        historyWheelDelta = 0;
-        historyWheelLockUntil = 0;
-        activateHistoryItem(0);
-      } else if (!entry.isIntersecting) {
-        historySectionVisible = false;
-      }
-    }, { threshold: 0.01 });
-
-    historyEntryObserver.observe(aboutHistorySection);
-  }
-}
-
-const heroGraph = document.querySelector('.infrastructure');
-const heroCloud = document.querySelector('.cloud-art');
-
-if (!reducedMotion && heroGraph && heroCloud) {
-  let depthFrame = null;
-
-  const updateHeroDepth = () => {
-    depthFrame = null;
-    const rect = heroGraph.getBoundingClientRect();
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-    const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-    const clamped = Math.max(0, Math.min(1, progress));
-    const depthY = (clamped - 0.5) * 34;
-    heroCloud.style.setProperty('--hero-depth-y', `${depthY.toFixed(2)}px`);
+  window.addEventListener('wheel', handleHistoryWheel, { capture: true, passive: false });
+  window.addEventListener('scroll', syncHistoryFromScroll, { passive: true });
+  window.addEventListener('resize', syncHistoryFromScroll);
+  const releaseHistorySnap = () => {
+    snapTarget = null;
+    wheelHistoryActive = false;
   };
-
-  const requestHeroDepth = () => {
-    if (depthFrame !== null) return;
-    depthFrame = requestAnimationFrame(updateHeroDepth);
-  };
-
-  updateHeroDepth();
-  window.addEventListener('scroll', requestHeroDepth, { passive: true });
-  window.addEventListener('resize', requestHeroDepth);
+  document.addEventListener('keydown', releaseHistorySnap);
+  document.addEventListener('touchstart', releaseHistorySnap, { passive: true });
+  document.addEventListener('pointerdown', releaseHistorySnap, { passive: true });
+  window.addEventListener('hashchange', () => { releaseHistorySnap(); syncHistoryFromScroll(); });
+  syncHistoryFromScroll();
 }
 
 // Keep every ambient loop tied to the section currently on screen. This mirrors
@@ -875,3 +924,81 @@ document.querySelectorAll('[data-career-select]').forEach((field) => {
     if (event.key === 'Escape') setOpen(false);
   });
 });
+
+// Ease mouse-wheel movement without changing the page's native anchor scrolling.
+(() => {
+  const scrollingElement = document.scrollingElement;
+  if (!scrollingElement) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let targetY = scrollingElement.scrollTop;
+  let frame = null;
+  let lastFrameTime = 0;
+
+  const stopScroll = () => {
+    if (frame !== null) cancelAnimationFrame(frame);
+    frame = null;
+    lastFrameTime = 0;
+    targetY = scrollingElement.scrollTop;
+  };
+
+  const getMaxScroll = () => Math.max(0, scrollingElement.scrollHeight - window.innerHeight);
+
+  const animateScroll = (time) => {
+    const elapsed = lastFrameTime ? Math.min(time - lastFrameTime, 32) : 16;
+    lastFrameTime = time;
+    const currentY = scrollingElement.scrollTop;
+    const distance = targetY - currentY;
+
+    if (Math.abs(distance) < 0.5) {
+      scrollingElement.scrollTo({ top: targetY, behavior: 'instant' });
+      frame = null;
+      lastFrameTime = 0;
+      return;
+    }
+
+    const easing = 1 - Math.exp(-elapsed / 140);
+    scrollingElement.scrollTo({ top: currentY + distance * easing, behavior: 'instant' });
+    frame = requestAnimationFrame(animateScroll);
+  };
+
+  const handleWheel = (event) => {
+    if (reducedMotion.matches || !event.cancelable || event.ctrlKey || event.metaKey ||
+        Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY) return;
+
+    const deltaY = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+
+    for (let element = event.target; element && element !== scrollingElement; element = element.parentElement) {
+      if (!(element instanceof Element) || element.scrollHeight <= element.clientHeight) continue;
+      const overflow = getComputedStyle(element).overflowY;
+      if (!['auto', 'scroll', 'overlay'].includes(overflow)) continue;
+      const remaining = deltaY > 0
+        ? element.scrollHeight - element.clientHeight - element.scrollTop
+        : element.scrollTop;
+      if (remaining > 0) {
+        stopScroll();
+        return;
+      }
+    }
+
+    if (frame === null) targetY = scrollingElement.scrollTop;
+    targetY = Math.min(getMaxScroll(), Math.max(0, targetY + deltaY));
+    if (targetY === scrollingElement.scrollTop && frame === null) return;
+    event.preventDefault();
+    if (frame === null) frame = requestAnimationFrame(animateScroll);
+  };
+
+  window.addEventListener('wheel', handleWheel, { passive: false });
+  window.addEventListener('history-scroll-step', stopScroll);
+  window.addEventListener('scroll', () => {
+    if (frame === null) targetY = scrollingElement.scrollTop;
+  }, { passive: true });
+  document.addEventListener('keydown', (event) => {
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) stopScroll();
+  });
+  document.addEventListener('touchstart', stopScroll, { passive: true });
+  document.addEventListener('pointerdown', stopScroll, { passive: true });
+  window.addEventListener('hashchange', stopScroll);
+  window.addEventListener('popstate', stopScroll);
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) stopScroll(); });
+})();
